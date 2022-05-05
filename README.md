@@ -1,2 +1,2 @@
 # So2022
-Progetto sistema operativi 2022
+Progetto sistemi operativi 2022
