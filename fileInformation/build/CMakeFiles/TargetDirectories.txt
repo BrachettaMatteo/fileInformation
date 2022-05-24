@@ -1,3 +1,0 @@
-/home/muser/Desktop/So2022/fileInformation/build/CMakeFiles/rebuild_cache.dir
-/home/muser/Desktop/So2022/fileInformation/build/CMakeFiles/edit_cache.dir
-/home/muser/Desktop/So2022/fileInformation/build/CMakeFiles/fileInformation.dir
