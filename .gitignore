@@ -1,2 +1,2 @@
 #ignore folder build cmake
-./fileInformation/build/*git 
+/fileInformation/build/*
