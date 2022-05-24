@@ -1,2 +1,2 @@
-#ingore folder build cmake
-./fileInformation/build/
+#ignore folder build cmake
+./fileInformation/build/*git 
