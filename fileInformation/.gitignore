@@ -1,1 +1,2 @@
-./build
+#ingore folder build cmake
+build
