@@ -2,5 +2,7 @@
 cmake_minimum_required(VERSION 2.4)
 #name of project
 project(fileInformation)
+#add source directory for *.h
+include_directories(${PROJECT_SOURCE_DIR}/library)
 #gcc main.c -o fileInformation
-add_executable(fileInformation main.c)
+add_executable(fileInformation ./src/main.c)

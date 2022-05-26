@@ -11,6 +11,7 @@ Progetto sviluppato per sistemi Unix/Linux in grado di rilevare:
 - Numero di righe;
 - Numero di link al file;
 - Nome del proprietario del file.
+- Numero dei caratteri.
 
 ### Componenti gruppo
 - Brachetta Matteo [matteo.brachetta@studenti.unicam.it]
