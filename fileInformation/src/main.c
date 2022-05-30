@@ -12,6 +12,8 @@ int main(int argc, char const *argv[])
         printf("pathfile: %s \n", pathFile);
         printf("numero caratteri: %d \n", numeroCaratteri(pathFile));
         printf("nome prorpietario: %s \n", nomeProprietario(pathFile));
+        printf("numero righe: %d \n", numeroRighe(pathFile));
+        printf("dimensione file: %d \n", dimensioneFile(pathFile))
         time_t ddd = dataUltimaModifica(pathFile);
         struct tm *dataCreazione;
         dataCreazione = localtime(&ddd);
@@ -74,4 +76,47 @@ int checkPath(char *pathfFile)
     }
     else
         return 0;
+}
+
+int numeroRighe(char *pathFile){
+	
+	
+    FILE *fp;          //puntatore al file
+    int cont = 0;      //contatore per le righe
+    int carattere = 0; //variabile per la lettura dela carattere contenuto nella riga letta (sottoforma di codice ASCII)
+
+    if ((fp = fopen(filePath, "r")) != NULL) //apertura del file in lettura
+    {
+        while (!feof(fp)) //controllo che il file non sia finito
+        {
+            carattere = fgetc(fp); //prelevo il primo carattere letto nella riga
+            if (carattere == '\n') //controllo che non sia un ritorno a capo
+            {
+                cont++; //conto a che riga sono arrivato
+            }
+        }
+        fclose(fp); //chiusura del file
+    }
+    else
+        printf("Non sono riuscito ad aprire il file\n");
+    return cont;
+
+	
+}
+
+int dimensioneFile(char *file){
+	 
+  FILE *fd;
+  int size, dim;
+  fd = fopen(FilePath, "r");//apertura file
+  if(fd == NULL) {
+    perror("Errore in apertura del file");
+    exit(1);
+    
+  fseek(fd, 0, SEEK_END);//determina la dimensione di un file
+  size = ftell(fd);
+  printf("Numero di byte su file: %d\n", size);
+  
+  fclose(fd);
+  return 0;
 }
