@@ -90,40 +90,41 @@ int checkPath(char *pathfFile)
 int numeroRighe(char *pathFile)
 {
 
-    FILE *fp;          //puntatore al file
-    int cont = 0;      //contatore per le righe
-    int carattere = 0; //variabile per la lettura dela carattere contenuto nella riga letta (sottoforma di codice ASCII)
-    if (checkPath(pathFile) == 1)
+    int fd, i, righe;
+    char buffer[MAX_BUFFER];
+    if (checkPath(pathFile) != -1)
     {
-        while (!feof(fp)) //controllo che il file non sia finito
+        fd = open(pathFile, O_RDONLY);
+        read(fd, buffer, MAX_BUFFER);
+        close(fd);
+        righe=0;
+        i = 0;
+        //scorro fino alla fine del file
+        while (buffer[i] != '\0')
         {
-            carattere = fgetc(fp); //prelevo il primo carattere letto nella riga
-            if (carattere == '\n') //controllo che non sia un ritorno a capo
+            //conto righe
+            if (buffer[i] == '\n')
             {
-                cont++; //conto a che riga sono arrivato
+                righe++;
             }
+            i++;
         }
-        fclose(fp); //chiusura del file
     }
-    else
-        printf("Non sono riuscito ad aprire il file\n");
-    return cont;
+    return righe;
 }
 
 int dimensioneFile(char *file)
 {
 
-    FILE *fd;
-    int size;
-    fd = fopen(file, "r"); //apertura file
+    int fd, size;
     if (checkPath(file) != -1)
     {
-        fseek(fd, 0, SEEK_END); //determina la dimensione di un file
-        size = ftell(fd);
-        fclose(fd);
-        return size;
+        fd = open(file, O_RDONLY);
+        //punto all'ultimo byte del file così da ottenere la dimensione
+        size = lseek(fd, 0, SEEK_END);
+        close(fd);
     }
-    return 0;
+    return size;
 }
 char *permessi(char *file)
 { //libero vechia memoria
