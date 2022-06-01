@@ -1,3 +1,0 @@
-C:/Users/Giuseppe/Desktop/prova/So2022/fileInformation/cmake-build-debug/CMakeFiles/fileInformation.dir
-C:/Users/Giuseppe/Desktop/prova/So2022/fileInformation/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Giuseppe/Desktop/prova/So2022/fileInformation/cmake-build-debug/CMakeFiles/rebuild_cache.dir

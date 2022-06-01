@@ -1,12 +1,21 @@
 #include <stdio.h>
 #include <time.h>
 
-#include <sys/stat.h>
 //uidd-> name proprietario
 #include <pwd.h>
 
-#define MAX_SIZE_FILEPATH 200
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 
+#include <string.h>
+
+#include<stdlib.h>
+
+#define MAX_SIZE_FILEPATH 200
+#define MAX_BUFFER 10000
+#define MAX_SIZE_PERMISSIONS 30
 /**
  * @brief determina la dimensione del file in byte
  * 
@@ -46,10 +55,9 @@ int numeroCaratteri(char *pathFile);
  * @brief retituisce i permessi del file per il determinato ruolo
  * 
  * @param file percorso del file
- * @param ruolo puo essere admin, group o user
  * @return restituisce l'elenco dei permessi del file per il ruolo indicato.
  */
-char *permessi(char *file, char ruolo);
+char *permessi(char *file);
 /**
  * @brief determina l'ultima modifica fatta
  * 
