@@ -1,31 +1,69 @@
 
 #include "fileInformation.h"
 
+#include <stdio.h>
+#include <unistd.h>
+
 int main(int argc, char const *argv[])
 {
-    char fp[MAX_SIZE_FILEPATH];
-
-    char *pathFile = fp;
-    printf("inserire path file: ");
-    scanf(" %s", pathFile);
-    if (checkPath(pathFile) != -1)
+    if (argc == 2)
     {
-        printf("pathfile: %s \n", pathFile);
-        printf("numero caratteri: %d \n", numeroCaratteri(pathFile));
-        printf("nome prorpietario: %s \n", nomeProprietario(pathFile));
-        // printf("numero righe: %d \n", numeroRighe(pathFile));
-        printf("dimensione file: %d  bytes\n", dimensioneFile(pathFile));
-        time_t ddd = dataUltimaModifica(pathFile);
-        struct tm *dataCreazione;
-        dataCreazione = localtime(&ddd);
-        /*
+        char fp[MAX_SIZE_FILEPATH];
+
+        char *pathFile = fp;
+        printf("inserire path file: ");
+        scanf(" %s", pathFile);
+        if (checkPath(pathFile) != -1)
+        {
+            printf("pathfile: %s \n", pathFile);
+            printf("numero caratteri: %d \n", numeroCaratteri(pathFile));
+            printf("nome prorpietario: %s \n", nomeProprietario(pathFile));
+            // printf("numero righe: %d \n", numeroRighe(pathFile));
+            printf("dimensione file: %d  bytes\n", dimensioneFile(pathFile));
+            time_t ddd = dataUltimaModifica(pathFile);
+            struct tm *dataCreazione;
+            dataCreazione = localtime(&ddd);
+            /*
         - aggiungo 1 al mese perchè il conteggio parte da 0, ovvero gennaio=0:
         - aggiungo 1900 al anno perchè nella documntazione sottrae 1900;
         -
          */
-        printf("data ultima modifica:%d/%d/%d %d:%d \n", dataCreazione->tm_mday, dataCreazione->tm_mon + 1,
-               dataCreazione->tm_year + 1900, dataCreazione->tm_hour + 1, dataCreazione->tm_min);
-        printf("permessi: %s \n", permessi(pathFile));
+
+            printf("data ultima modifica:%d/%d/%d %d:%d \n", dataCreazione->tm_mday, dataCreazione->tm_mon + 1,
+                   dataCreazione->tm_year + 1900, dataCreazione->tm_hour + 1, dataCreazione->tm_min);
+            printf("permessi: %s \n", permessi(pathFile));
+        }
+    }
+    if (argc == 3)
+    {
+        int opt;
+        // put ':' in the starting of the
+        // string so that program can
+        //distinguish between '?' and ':'
+        while ((opt = getopt(argc, argv, "c:o:d:l:s:p:r")) != -1)
+        {
+            switch (opt)
+            {
+            case 'c':
+            {
+                printf("mum caratteri: %d \n", numeroCaratteri(argv[2]));
+                break;
+            };
+            case 'r':
+            {
+                //cambiare i permessi
+                if( checkPath(argv[2])!=-1){
+                int fd;
+                char path [15]="./report.txt";
+                fd=creat(path,O_CREAT);
+                write(fd,"REPORT \n",10);
+                close(fd);
+                }
+               
+                break;
+            };
+            }
+        }
     }
 
     return 0;
@@ -38,7 +76,7 @@ int numeroCaratteri(char *pathFile)
     //buffer per read
     char buffer[MAX_BUFFER] = "/0";
     //contatore caratteri
-    int caratteri;
+    int caratteri = 0;
     if (checkPath(pathFile) != 1)
     {
         //apertura file
@@ -97,7 +135,7 @@ int numeroRighe(char *pathFile)
         fd = open(pathFile, O_RDONLY);
         read(fd, buffer, MAX_BUFFER);
         close(fd);
-        righe=0;
+        righe = 0;
         i = 0;
         //scorro fino alla fine del file
         while (buffer[i] != '\0')
