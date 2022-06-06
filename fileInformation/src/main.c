@@ -18,7 +18,7 @@ int main(int argc, char const *argv[])
             printf("pathfile: %s \n", pathFile);
             printf("numero caratteri: %d \n", numeroCaratteri(pathFile));
             printf("nome prorpietario: %s \n", nomeProprietario(pathFile));
-            // printf("numero righe: %d \n", numeroRighe(pathFile));
+            printf("numero righe: %d \n", numeroRighe(pathFile));
             printf("dimensione file: %d  bytes\n", dimensioneFile(pathFile));
             time_t ddd = dataUltimaModifica(pathFile);
             struct tm *dataCreazione;
@@ -49,6 +49,39 @@ int main(int argc, char const *argv[])
                 printf("mum caratteri: %d \n", numeroCaratteri(argv[2]));
                 break;
             };
+                case 'o':
+                {
+                    printf("nome prorpietario: %s \n", nomeProprietario(argv[2]));
+                    break;
+                };
+                case 'd':
+                {
+                    time_t ddd = dataUltimaModifica(argv[2]);
+                    struct tm *dataCreazione;
+                    dataCreazione = localtime(&ddd);
+                    printf("data ultima modifica:%d/%d/%d %d:%d \n", dataCreazione->tm_mday, dataCreazione->tm_mon + 1,
+                           dataCreazione->tm_year + 1900, dataCreazione->tm_hour + 1, dataCreazione->tm_min);
+                    break;
+                };
+                case 'l':
+                {
+                    printf("numero righe: %d \n", numeroRighe(argv[2]);
+                    break;
+                };
+                case 's':
+                {
+                    printf("dimensione file: %d  bytes\n", dimensioneFile(argv[2]));
+                    break;
+                };
+                case 'p':
+                {
+                    printf("permessi: %s \n", permessi(argv[2]));
+                    break;
+                };
+
+
+
+
             case 'r':
             {
                 //cambiare i permessi
@@ -62,6 +95,8 @@ int main(int argc, char const *argv[])
                
                 break;
             };
+                default:
+                    printf("commando inesistente");
             }
         }
     }
