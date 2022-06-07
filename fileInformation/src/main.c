@@ -1,9 +1,6 @@
 
 #include "fileInformation.h"
 
-#include <stdio.h>
-#include <unistd.h>
-
 int main(int argc, char const *argv[])
 {
     if (argc == 2)
@@ -40,63 +37,98 @@ int main(int argc, char const *argv[])
         // put ':' in the starting of the
         // string so that program can
         //distinguish between '?' and ':'
-        while ((opt = getopt(argc, argv, "c:o:d:l:s:p:r")) != -1)
+        while ((opt = getopt(argc, (char **)argv, "c:o:d:l:s:p:r")) != -1)
         {
             switch (opt)
             {
             case 'c':
             {
-                printf("mum caratteri: %d \n", numeroCaratteri(argv[2]));
+                printf("mum caratteri: %d \n", numeroCaratteri((char *)argv[2]));
                 break;
             };
-                case 'o':
-                {
-                    printf("nome prorpietario: %s \n", nomeProprietario(argv[2]));
-                    break;
-                };
-                case 'd':
-                {
-                    time_t ddd = dataUltimaModifica(argv[2]);
-                    struct tm *dataCreazione;
-                    dataCreazione = localtime(&ddd);
-                    printf("data ultima modifica:%d/%d/%d %d:%d \n", dataCreazione->tm_mday, dataCreazione->tm_mon + 1,
-                           dataCreazione->tm_year + 1900, dataCreazione->tm_hour + 1, dataCreazione->tm_min);
-                    break;
-                };
-                case 'l':
-                {
-                    printf("numero righe: %d \n", numeroRighe(argv[2]);
-                    break;
-                };
-                case 's':
-                {
-                    printf("dimensione file: %d  bytes\n", dimensioneFile(argv[2]));
-                    break;
-                };
-                case 'p':
-                {
-                    printf("permessi: %s \n", permessi(argv[2]));
-                    break;
-                };
-
-
-
+            case 'o':
+            {
+                printf("nome prorpietario: %s \n", nomeProprietario((char *)argv[2]));
+                break;
+            };
+            case 'd':
+            {
+                time_t ddd = dataUltimaModifica((char *)argv[2]);
+                struct tm *dataCreazione;
+                dataCreazione = localtime(&ddd);
+                printf("data ultima modifica:%d/%d/%d %d:%d \n", dataCreazione->tm_mday, dataCreazione->tm_mon + 1,
+                       dataCreazione->tm_year + 1900, dataCreazione->tm_hour + 1, dataCreazione->tm_min);
+                break;
+            };
+            case 'l':
+            {
+                printf("numero righe: %d \n", numeroRighe((char *)argv[2]));
+                break;
+            };
+            case 's':
+            {
+                printf("dimensione file: %d  bytes\n", dimensioneFile((char *)argv[2]));
+                break;
+            };
+            case 'p':
+            {
+                printf("permessi: %s \n", permessi((char *)argv[2]));
+                break;
+            };
 
             case 'r':
             {
-                //cambiare i permessi
-                if( checkPath(argv[2])!=-1){
-                int fd;
-                char path [15]="./report.txt";
-                fd=creat(path,O_CREAT);
-                write(fd,"REPORT \n",10);
-                close(fd);
+                if (checkPath((char *)argv[2]) != -1)
+                {
+                    int fd;
+                    //destinazione file
+                    char path[15] = "./report.txt";
+                    fd = open(path, O_CREAT | O_WRONLY, S_IRUSR);
+                    char text[MAX_BUFFER];
+                    strcat(text, "!--REPORT--!\n");
+                    time_t t = time(NULL);
+                    char buf[100];
+                    struct tm tm = *localtime(&t);
+
+                    char work[MAX_BUFFER];
+                    sprintf(work, "DATA REPORT: %02d-%02d-%d %02d:%02d:%02d \n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900, tm.tm_hour, tm.tm_min, tm.tm_sec);
+                    strcat(text, work);
+                    strcat(text, "FILEPATH:");
+                    strcat(text, (char *)argv[2]);
+                    strcat(text, "\n");
+                    strcat(text, "PROPEITARIO: ");
+                    strcat(text, nomeProprietario((char *)argv[2]));
+                    strcat(text, "\n");
+                    strcat(text, "PERMESSI: ");
+                    strcat(text, permessi((char *)argv[2]));
+                    strcat(text, "\n");
+                    sprintf(work, "%d bytes", dimensioneFile((char *)argv[2]));
+                    strcat(text, "DIMENSIONE: ");
+                    strcat(text, work);
+                    strcat(text, "\n");
+                    strcat(text, "NUMERO CARATTERI: ");
+                    sprintf(work, "%d", numeroCaratteri((char *)argv[2]));
+                    strcat(text, work);
+                    strcat(text, "\n");
+                    time_t ddd = dataUltimaModifica((char *)argv[2]);
+                    struct tm *dataCreazione;
+                    dataCreazione = localtime(&ddd);
+                    sprintf(work, "NUMERO RIGHE: %d \n", numeroRighe((char *)argv[2]));
+                    strcat(text, work);
+                    sprintf(work, "DATA ULTIMA MODIFICA: %d/%d/%d %d:%d \n", dataCreazione->tm_mday, dataCreazione->tm_mon + 1,
+                            dataCreazione->tm_year + 1900, dataCreazione->tm_hour + 1, dataCreazione->tm_min);
+                    strcat(text, work);
+                    //scrivo nel file
+
+                    write(fd, text, MAX_BUFFER);
+                    close(fd);
+                    printf("Report creato \n");
                 }
-               
+
                 break;
             };
-                default:
-                    printf("commando inesistente");
+            default:
+                printf("Lista comandi opzione\n -c restituisce il numero di caratteri; \n -o restituisce il nome del proprietario; \n -d restituisce la data dell'ultima modifica;\n -l restituisce il numero di righe;\n -s restituisce la dimensione del file;\n -p restituisce i permessi del file;\n -r  crea un report con tutti i dettagli  su un nuovo");
             }
         }
     }

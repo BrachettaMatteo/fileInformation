@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <time.h>
 
-//uidd-> name proprietario
 #include <pwd.h>
 
 #include <sys/types.h>
@@ -11,7 +10,9 @@
 
 #include <string.h>
 
-#include<stdlib.h>
+#include <stdlib.h>
+
+#include <locale.h>
 
 #define MAX_SIZE_FILEPATH 200
 #define MAX_BUFFER 10000
@@ -37,13 +38,6 @@ int numeroRighe(char *file);
  * @return char* nome del proprietario
  */
 char *nomeProprietario(char *pathFile);
-/**
- * @brief determina i link presenti nel file
- * 
- * @param file percorso del file
- * @return numero dei link al file.
- */
-int numeroLinkFile(char *file);
 /**
  * @brief permette di detreminare il numero dei caratteri del file
  * 
@@ -71,4 +65,4 @@ time_t dataUltimaModifica(char *file);
  * @param pathFile percorso del file
  * @return 1 se il percorso è collegato ad un file altrimenti 0 se il percorso non è collegato al file.
  */
-int checkPath(char *pathFile);
+int checkPath( char *pathFile);
