@@ -1,4 +1,12 @@
-
+/**
+ * @file main.c
+ * @authors Brachetta Matteo (matteo.brachetta@studenti.unicam.it)
+ *          Maiellaro Giuseppe (giuseppe.maiellaro@studenti.unicam.it)
+ * @version 0.1
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include "fileInformation.h"
 
 int main(int argc, char const *argv[])
@@ -91,33 +99,34 @@ int main(int argc, char const *argv[])
                     struct tm tm = *localtime(&t);
 
                     char work[MAX_BUFFER];
-                    sprintf(work, "DATA REPORT: %02d-%02d-%d %02d:%02d:%02d \n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900, tm.tm_hour, tm.tm_min, tm.tm_sec);
+                    sprintf(work, "DATA REPORT: %02d-%02d-%d %02d:%02d:%02d \n \n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900, tm.tm_hour, tm.tm_min, tm.tm_sec);
+
                     strcat(text, work);
-                    strcat(text, "FILEPATH:");
-                    strcat(text, (char *)argv[2]);
-                    strcat(text, "\n");
-                    strcat(text, "PROPEITARIO: ");
-                    strcat(text, nomeProprietario((char *)argv[2]));
-                    strcat(text, "\n");
-                    strcat(text, "PERMESSI: ");
-                    strcat(text, permessi((char *)argv[2]));
-                    strcat(text, "\n");
-                    sprintf(work, "%d bytes", dimensioneFile((char *)argv[2]));
-                    strcat(text, "DIMENSIONE: ");
+                    sprintf(work, "FILEPATH: %s \n", (char *)argv[2]);
                     strcat(text, work);
-                    strcat(text, "\n");
-                    strcat(text, "NUMERO CARATTERI: ");
-                    sprintf(work, "%d", numeroCaratteri((char *)argv[2]));
+
+                    sprintf(work, "NUMERO CARATTERI: %d \n", numeroCaratteri((char *)argv[2]));
                     strcat(text, work);
-                    strcat(text, "\n");
+
+                    sprintf(work, "PROPRIETARIO: %s \n", nomeProprietario((char *)argv[2]));
+                    strcat(text, work);
+
                     time_t ddd = dataUltimaModifica((char *)argv[2]);
                     struct tm *dataCreazione;
                     dataCreazione = localtime(&ddd);
-                    sprintf(work, "NUMERO RIGHE: %d \n", numeroRighe((char *)argv[2]));
-                    strcat(text, work);
                     sprintf(work, "DATA ULTIMA MODIFICA: %d/%d/%d %d:%d \n", dataCreazione->tm_mday, dataCreazione->tm_mon + 1,
                             dataCreazione->tm_year + 1900, dataCreazione->tm_hour + 1, dataCreazione->tm_min);
                     strcat(text, work);
+
+                    sprintf(work, "NUMERO RIGHE: %d \n", numeroRighe((char *)argv[2]));
+                    strcat(text, work);
+
+                    sprintf(work, "DIMENSIONE: %d bytes \n", dimensioneFile((char *)argv[2]));
+                    strcat(text, work);
+
+                    sprintf(work, "PERMESSI: %s \n", permessi((char *)argv[2]));
+                    strcat(text, work);
+
                     //scrivo nel file
 
                     write(fd, text, MAX_BUFFER);
@@ -136,60 +145,18 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-int numeroCaratteri(char *pathFile)
+int dimensioneFile(char *pathFile)
 {
-    //file descriptor
-    int fd;
-    //buffer per read
-    char buffer[MAX_BUFFER] = "/0";
-    //contatore caratteri
-    int caratteri = 0;
-    if (checkPath(pathFile) != 1)
+
+    int fd, size;
+    if (checkPath(pathFile) != -1)
     {
-        //apertura file
         fd = open(pathFile, O_RDONLY);
-        //lettura file
-        read(fd, buffer, MAX_BUFFER);
-        //chiusura file;
+        //punto all'ultimo byte del file così da ottenere la dimensione
+        size = lseek(fd, 0, SEEK_END);
         close(fd);
     }
-    /*
-    la var buffer conterra tutti i caratteri
-    del file.
-    */
-    return strlen(buffer);
-}
-
-char *nomeProprietario(char *pathFile)
-{
-    struct stat buf;
-    struct passwd *pwd;
-    //ottengo informazioni file
-    stat(pathFile, &buf);
-    //convero l'id in nome utente
-    pwd = getpwuid(buf.st_uid);
-
-    return pwd->pw_name;
-}
-
-time_t dataUltimaModifica(char *pathFile)
-{
-    struct stat buf;
-    stat(pathFile, &buf);
-    struct tm dataCreazione;
-    //ottengo data ultima modifica del file
-    dataCreazione = *(gmtime(&buf.st_mtim));
-    //trasformo type tm in type time_t
-    return mktime(&dataCreazione);
-}
-
-int checkPath(char *pathfFile)
-{
-    int fd = open(pathfFile, O_RDONLY);
-    close(fd);
-    if (fd == -1)
-        printf("ERROR OPEN FILE \n");
-    return fd;
+    return size;
 }
 
 int numeroRighe(char *pathFile)
@@ -217,21 +184,43 @@ int numeroRighe(char *pathFile)
     }
     return righe;
 }
-
-int dimensioneFile(char *file)
+char *nomeProprietario(char *pathFile)
 {
+    struct stat buf;
+    struct passwd *pwd;
+    //ottengo informazioni file
+    stat(pathFile, &buf);
+    //convero l'id in nome utente
+    pwd = getpwuid(buf.st_uid);
 
-    int fd, size;
-    if (checkPath(file) != -1)
+    return pwd->pw_name;
+}
+
+int numeroCaratteri(char *pathFile)
+{
+    //file descriptor
+    int fd;
+    //buffer per read
+    char buffer[MAX_BUFFER] = "/0";
+    //contatore caratteri
+    int caratteri = 0;
+    if (checkPath(pathFile) != 1)
     {
-        fd = open(file, O_RDONLY);
-        //punto all'ultimo byte del file così da ottenere la dimensione
-        size = lseek(fd, 0, SEEK_END);
+        //apertura file
+        fd = open(pathFile, O_RDONLY);
+        //lettura file
+        read(fd, buffer, MAX_BUFFER);
+        //chiusura file;
         close(fd);
     }
-    return size;
+    /*
+    la var buffer conterra tutti i caratteri
+    del file.
+    */
+    return strlen(buffer);
 }
-char *permessi(char *file)
+
+char *permessi(char *pathFile)
 { //libero vechia memoria
 
     char *permessi;
@@ -244,20 +233,40 @@ char *permessi(char *file)
         permessi = malloc(MAX_SIZE_PERMISSIONS * sizeof(int));
     }
 
-    if (checkPath(file) != -1)
+    if (checkPath(pathFile) != -1)
     {
-        if (access(file, 01) == 0)
+        if (access(pathFile, 01) == 0)
         {
             strcat(permessi, "EXECUTE ");
         }
-        if (access(file, 02) == 0)
+        if (access(pathFile, 02) == 0)
         {
             strcat(permessi, "WRITE ");
         }
-        if (access(file, 04) == 0)
+        if (access(pathFile, 04) == 0)
         {
             strcat(permessi, "READ ");
         }
     }
     return permessi;
+}
+
+time_t dataUltimaModifica(char *pathFile)
+{
+    struct stat buf;
+    stat(pathFile, &buf);
+    struct tm dataCreazione;
+    //ottengo data ultima modifica del file
+    dataCreazione = *(gmtime(&buf.st_mtim));
+    //trasformo type tm in type time_t
+    return mktime(&dataCreazione);
+}
+
+int checkPath(char *pathfFile)
+{
+    int fd = open(pathfFile, O_RDONLY);
+    close(fd);
+    if (fd == -1)
+        printf("ERROR OPEN FILE \n");
+    return fd;
 }

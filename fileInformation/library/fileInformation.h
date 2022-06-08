@@ -1,3 +1,12 @@
+/**
+ * @file fileInformation.h
+ * @authors Brachetta Matteo (matteo.brachetta@studenti.unicam.it)
+ *          Maiellaro Giuseppe (giuseppe.maiellaro@studenti.unicam.it) 
+ * @version 0.1
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include <stdio.h>
 #include <time.h>
 
@@ -20,22 +29,22 @@
 /**
  * @brief determina la dimensione del file in byte
  * 
- * @param file percorso del file
+ * @param pathFile percorso del file
  * @return dimensione del file
  */
-int dimensioneFile(char *file);
+int dimensioneFile(char *pathFile);
 /**
- * @brief detremina il numero di righe
+ * @brief determina il numero di righe
  * 
- * @param file percorso del file
+ * @param pathFile percorso del file
  * @return il numero di righe, se il file è vuoto ritorna 0
  */
-int numeroRighe(char *file);
+int numeroRighe(char *pathFile);
 /**
  * @brief determina il nome del proprietario
  * 
  * @param pathFile percorso del file
- * @return char* nome del proprietario
+ * @return  nome del proprietario
  */
 char *nomeProprietario(char *pathFile);
 /**
@@ -46,23 +55,23 @@ char *nomeProprietario(char *pathFile);
  */
 int numeroCaratteri(char *pathFile);
 /**
- * @brief retituisce i permessi del file per il determinato ruolo
+ * @brief retituisce i permessi del file 
  * 
- * @param file percorso del file
- * @return restituisce l'elenco dei permessi del file per il ruolo indicato.
+ * @param pathFile percorso del file
+ * @return l'elenco dei permessi 
  */
-char *permessi(char *file);
+char *permessi(char *pathFile);
 /**
  * @brief determina l'ultima modifica fatta
  * 
- * @param file 
+ * @param pathFile 
  * @return la data di ultima modifica
  */
-time_t dataUltimaModifica(char *file);
+time_t dataUltimaModifica(char *pathFile);
 /**
- * @brief determina se il percorso è corretto
+ * @brief determina se il percorso è corretto, ovvero verifica se il file esiste o meno
  * 
  * @param pathFile percorso del file
- * @return 1 se il percorso è collegato ad un file altrimenti 0 se il percorso non è collegato al file.
+ * @return -1 se il file on esiste altrimenti un valore diverso da -1
  */
-int checkPath( char *pathFile);
+int checkPath(char *pathFile);
