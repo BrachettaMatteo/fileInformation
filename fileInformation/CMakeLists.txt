@@ -6,4 +6,4 @@ project(fileInformation)
 include_directories(${PROJECT_SOURCE_DIR}/library)
 
 #gcc main.c -o fileInformation
-add_executable(fileInformation ./src/main.c)
+add_executable(fileInformation ./src/utility.c ./src/config.c ./src/main.c )
