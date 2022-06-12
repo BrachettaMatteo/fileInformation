@@ -19,6 +19,21 @@ Progetto sviluppato per sistemi Unix/Linux in grado di rilevare:
 
 Possibilità di eseguire i comandi in modo singolare oppure stilare un report con tutti i dettagli sopra elencati.
 
+## Struttura
+
+il progetto viene diviso in cartelle:
+
+1. `./fileInformation/library` contiene tutti i file di header nello specifico:
+   - `./fileInformation/library/fileInformation.h` conternitore generale
+   - `./fileInformation/library/config.h` che illustrerà le funzioni principali della configurazione;
+   - `./fileInformation/library/opzioni.h` che conterrà le funzioni riguardante le opzioni create; -`./fileInformation/library/utility.h` che conterrà le funzioni riguardanti i "comandi" per le opzioni create;
+2. `./fileInformation/FileXTest` che conterrà file utili per la erifica delle funzioni
+3. `./fileInformation/src` conterrà tutte l'implementazione dei rispettive header(.h):
+   - `./fileInformation/src/config.c`
+   - `./fileInformation/src/utility.c`
+   - `./fileInformation/src/main.c`
+   - `./fileInformation/src/opzioni.c`
+
 ## Componenti gruppo
 
 - Brachetta Matteo [matteo.brachetta@studenti.unicam.it]
