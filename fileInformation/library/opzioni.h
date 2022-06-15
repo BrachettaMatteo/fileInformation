@@ -17,6 +17,7 @@
 #define DIMENSIONE 's'
 #define PERMESSI 'p'
 #define REPORT 'r'
+#define CARTELLARICORSIVA 'a'
 
 #define INTESTAZIONE_REPORT " \t  !--REPORT  FILE--!\n"
 /**
@@ -61,3 +62,9 @@ char *opzioneP(char *pathfile);
  * @param pathfile  file da analizzare
  */
 int opzioneR(char *pathfile);
+/**
+ * @brief restituisce i dettagli del file presenti nella cartella
+ *
+ * @param pathfile percorso del file
+ */
+int opzioneA(char *pathfile);

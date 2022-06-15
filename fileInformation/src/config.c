@@ -6,7 +6,7 @@ int configurazioneParametri(char *filepath, char **opzione)
     {
         int opt;
 
-        while ((opt = getopt(3, opzione, "c:o:d:l:s:p:r")) != -1)
+        while ((opt = getopt(3, opzione, "c:o:d:l:s:p:r:a")) != -1)
         {
             switch (opt)
             {
@@ -44,15 +44,20 @@ int configurazioneParametri(char *filepath, char **opzione)
                 printf("%s", opzioneP(filepath));
                 break;
             };
-
+            case CARTELLARICORSIVA:
+            {
+                opzioneA(filepath);
+                break;
+            };
             case REPORT:
             {
                 opzioneR(filepath);
                 break;
             };
+
             default:
             {
-                printf("Lista comandi opzione\n -c restituisce il numero di caratteri; \n -o restituisce il nome del proprietario; \n -d restituisce la data dell'ultima modifica;\n -l restituisce il numero di righe;\n -s restituisce la dimensione del file;\n -p restituisce i permessi del file;\n -r  crea un report con tutti i dettagli  su un nuovo");
+                printf("Lista comandi opzione\n -c restituisce il numero di caratteri; \n -o restituisce il nome del proprietario; \n -d restituisce la data dell'ultima modifica;\n -l restituisce il numero di righe;\n -s restituisce la dimensione del file;\n -p restituisce i permessi del file;\n -r  crea un report con tutti i dettagli  su un nuovo\n");
                 return -1;
             }
             }
@@ -66,7 +71,7 @@ int configurazioneDefault(char *pathFile)
 {
     if (checkPath(pathFile))
     {
-        printf("informazione file:\n");
+        printf("\n\t FILEINFORMATION \n\n");
         printf("PATHFILE: %s \n", pathFile);
         printf("%s", opzioneC(pathFile));
         printf("%s", opzioneO(pathFile));

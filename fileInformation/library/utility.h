@@ -25,7 +25,7 @@
 
 #include <errno.h>
 
-#include <locale.h>
+#include <dirent.h>
 
 #define MAX_SIZE_FILEPATH 200
 #define MAX_BUFFER 10000
@@ -80,3 +80,18 @@ time_t dataUltimaModifica(char *pathFile);
  * @return -1 se il file on esiste altrimenti un valore diverso da -1
  */
 int checkPath(char *pathFile);
+
+/**
+ * @brief permette di ottenre informazioni su tutti i file di un cartella
+ *
+ * @param filePath  percorso del file
+ * @return int
+ */
+int visitaRicorsiva(char *filePath);
+/**
+ * @brief permette di verificare se il pathFile è un acartella
+ *
+ * @param filePath percorso del file
+ * @return 1 se è una cartella altrimeneti -1
+ */
+int verificaCartella(char *filePath);

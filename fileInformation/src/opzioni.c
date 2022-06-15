@@ -103,3 +103,8 @@ int opzioneR(char *pathfile)
         }
     }
 }
+int opzioneA(char *filePath)
+{
+    visitaRicorsiva(filePath);
+    return 0;
+}

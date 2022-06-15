@@ -127,3 +127,64 @@ int numeroRighe(char *pathFile)
     }
     return righe;
 }
+
+char* visitaRicorsiva(char *filePath)
+{
+    struct dirent *dp;
+    DIR *dir = opendir(filePath);
+    char percorsoAggiuntivo[MAX_SIZE_FILEPATH] = "";
+    // Unable to open directory stream
+    if (dir == NULL)
+        return -1;
+
+    while ((dp = readdir(dir)) != NULL)
+    {
+
+        // Commento: controllo che non siano
+        //  cartelle specials . E ..
+        if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
+        {
+
+            // azzero pathfile
+            strcpy(percorsoAggiuntivo, "");
+            strcat(percorsoAggiuntivo, filePath);
+            strcat(percorsoAggiuntivo, "/");
+            strcat(percorsoAggiuntivo, dp->d_name);
+            if (verificaCartella(percorsoAggiuntivo) == 1)
+            {
+                visitaRicorsiva(percorsoAggiuntivo);
+            }
+            else
+            {
+
+            //è un file
+              configurazioneDefault(percorsoAggiuntivo);
+            }
+
+
+            /*
+            1. Creo una variabile(percorsoFile) per il percorso file nuovo inizializzata con il filepath iniziale
+            2. strcat(path, "/");
+            3. strcat(path, dp->d_name)
+            4. Verifico se è una cartello
+                1. Creo un nuovo processo e richiamo la funzione(ricomincio dal passo 1)
+            5. Chiamo il fileinformation per il file
+            */
+        }
+        
+    }
+    return 0;
+
+    closedir(dir);
+}
+int verificaCartella(char *filePath)
+{
+    DIR *dir;
+    if ((dir = opendir(filePath)) != NULL)
+    {
+        closedir(dir);
+        return 1;
+    }
+    else
+        return 0;
+}
