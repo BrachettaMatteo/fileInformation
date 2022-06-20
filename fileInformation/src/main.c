@@ -11,18 +11,18 @@
 
 int main(int argc, char const *argv[])
 {
-    if (argc == 2)
+    // primo controllo in base al numero di elementi inseriti
+    switch (argc)
     {
-        configurazioneDefault((char*) argv[1]);
+    case 2:
+        printf("%s", configurazioneDefault((char *)argv[1]));
+        break;
+    case 3:
+        printf("%s", configurazioneParametri((char *)argv[2], (char **)argv));
+        break;
+    default:
+        printf("ERRORE FORMATO, i formato acettati sono: \n\t configurazione default: ./fileInformation [percorsoFile] \n\t configurazione con parametri: ./fileInformation <opzioni> [percorsoFile]\n ");
+        break;
     }
-
-    else
-    {
-        if (argc == 3)
-        {
-            configurazioneParametri((char*)argv[2],(char**) argv);
-        }
-    }
-
     return 0;
 }

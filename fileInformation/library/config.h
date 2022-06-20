@@ -3,7 +3,7 @@
  * @authors Brachetta Matteo (matteo.brachetta@studenti.unicam.it)
  *          Maiellaro Giuseppe (giuseppe.maiellaro@studenti.unicam.it)
  * @version 0.2
- * @brief libreria che si occupa della gestione della configurazione iniziale, ovvero esamina l'input e lo smista 
+ * @brief libreria che si occupa della gestione della configurazione iniziale, ovvero esamina l'input e lo dirige per arrivare all'otput desiderato
  * @copyright Copyright (c) 2022
  *
  */
@@ -26,7 +26,7 @@
  * se l'opzione non corrisponde alle opzione elenecate segnera un messaggio di errore
  *
  */
-int configurazioneParametri( char *filepath, char **opzione);
+char* configurazioneParametri(char *filepath, char **opzione);
 /**
  * @brief configurazione con di deafult
  *
@@ -38,4 +38,4 @@ int configurazioneParametri( char *filepath, char **opzione);
  *            la dimensione del file;
  *            i permessi del file;
  */
-int configurazioneDefault(char *pathFile);
+char *configurazioneDefault(char *pathFile);

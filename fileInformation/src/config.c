@@ -1,6 +1,6 @@
 #include "config.h"
 
-int configurazioneParametri(char *filepath, char **opzione)
+char *configurazioneParametri(char *filepath, char **opzione)
 {
     if (checkPath(filepath))
     {
@@ -12,74 +12,77 @@ int configurazioneParametri(char *filepath, char **opzione)
             {
             case NUMERO_CARATTERI:
             {
-                printf("%s", opzioneC(filepath));
-                break;
+                return opzioneC(filepath);
             };
             case PROPRIETARIO:
             {
 
-                printf("%s", opzioneO(filepath));
-                break;
+                return opzioneO(filepath);
             };
             case ULTIMA_MODIFICA:
             {
 
-                printf("%s", opzioneD(filepath));
-                break;
+                return opzioneD(filepath);
             };
             case NUMERO_RIGHE:
             {
 
-                printf("%s", opzioneL(filepath));
-                break;
+                return opzioneL(filepath);
             };
             case DIMENSIONE:
             {
 
-                printf("%s", opzioneS(filepath));
-                break;
+                return opzioneS(filepath);
             };
             case PERMESSI:
             {
-                printf("%s", opzioneP(filepath));
-                break;
+                return opzioneP(filepath);
             };
             case CARTELLARICORSIVA:
             {
-                opzioneA(filepath);
-                break;
+
+                return opzioneA(filepath);
             };
             case REPORT:
             {
-                opzioneR(filepath);
-                break;
+                return opzioneR(filepath);
             };
 
             default:
             {
-                printf("Lista comandi opzione\n -c restituisce il numero di caratteri; \n -o restituisce il nome del proprietario; \n -d restituisce la data dell'ultima modifica;\n -l restituisce il numero di righe;\n -s restituisce la dimensione del file;\n -p restituisce i permessi del file;\n -r  crea un report con tutti i dettagli  su un nuovo\n");
-                return -1;
+                return aiuto();
             }
             }
-            return 0;
         }
     }
-    return -1;
 }
 
-int configurazioneDefault(char *pathFile)
+char *configurazioneDefault(char *pathFile)
 {
-    if (checkPath(pathFile))
+    if (!verificaCartella(pathFile) && checkPath(pathFile))
     {
-        printf("\n\t FILEINFORMATION \n\n");
-        printf("PATHFILE: %s \n", pathFile);
-        printf("%s", opzioneC(pathFile));
-        printf("%s", opzioneO(pathFile));
-        printf("%s", opzioneL(pathFile));
-        printf("%s", opzioneS(pathFile));
-        printf("%s", opzioneD(pathFile));
-        printf("%s", opzioneP(pathFile));
-        return 0;
+        // creo var per testo output
+        char *out = malloc(sizeof(char) * MAX_BUFFER);
+        // creo var di lavoro per testo 
+        char lavorazione[MAX_BUFFER];
+        //aggiungo intestazione
+        strcat(out, "\n\t FILEINFORMATION \n\n");
+        //aggiungo elementi al testo
+        sprintf(lavorazione, "PATHFILE: %s \n", pathFile);
+        strcat(out, lavorazione);
+        sprintf(lavorazione, "%s", opzioneC(pathFile));
+        strcat(out, lavorazione);
+        sprintf(lavorazione, "%s", opzioneO(pathFile));
+        strcat(out, lavorazione);
+        sprintf(lavorazione, "%s", opzioneL(pathFile));
+        strcat(out, lavorazione);
+        sprintf(lavorazione, "%s", opzioneS(pathFile));
+        strcat(out, lavorazione);
+        sprintf(lavorazione, "%s", opzioneD(pathFile));
+        strcat(out, lavorazione);
+        sprintf(lavorazione, "%s", opzioneP(pathFile));
+        strcat(out, lavorazione);
+        return out;
     }
-    return -1;
+    return "ERRORE configurazione default";
 }

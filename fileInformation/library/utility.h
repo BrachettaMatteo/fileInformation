@@ -27,9 +27,11 @@
 
 #include <dirent.h>
 
-#define MAX_SIZE_FILEPATH 200
+#define MAX_DIM_FILEPATH 200
 #define MAX_BUFFER 10000
-#define MAX_SIZE_PERMISSIONS 30
+#define MAX_DIM_PERMESSI 30
+
+#define PERCORSOREPORTCARTELLA "./reportAnalisi.txt"
 
 /**
  * @brief determina la dimensione del file in byte
@@ -95,3 +97,5 @@ int visitaRicorsiva(char *filePath);
  * @return 1 se è una cartella altrimeneti -1
  */
 int verificaCartella(char *filePath);
+int creaReportAnalisi();
+int scriviNelFile(char* filePath, char *testo);
