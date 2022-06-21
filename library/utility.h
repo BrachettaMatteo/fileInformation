@@ -29,7 +29,7 @@
 
 #define MAX_DIM_FILEPATH 200
 #define MAX_BUFFER 10000
-#define MAX_DIM_PERMESSI 30
+#define MAX_DIM_PERMESSI 32
 
 #define PERCORSOREPORTCARTELLA "./reportAnalisi.txt"
 
