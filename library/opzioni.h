@@ -31,36 +31,36 @@
 //dichiarazione messaggio di errore percorso 
 #define MESSAGGIOERROREPERCOSOFILE "ERRORE inserire un percorso ad un file\n"
 /**
- * @brief gestisce l'opzione -c, quindi stampera il numero di caratteri
+ * @brief gestisce l'opzione -c, quindi stamperà il numero di caratteri
  *
  * @param pathfile  file da analizzare
  */
 char *opzioneC(char *pathfile);
 /**
- * @brief gestisce l'opzione -o, quindi stampera il nome del proprietario
+ * @brief gestisce l'opzione -o, quindi stamperà il nome del proprietario
  * @param pathfile  file da analizzare
  */
 char *opzioneO(char *pathfile);
 /**
- * @brief gestisce l'opzione -d, quindi stampera la data dell'ultima modifica;
+ * @brief gestisce l'opzione -d, quindi stamperà la data dell'ultima modifica;
  *
  * @param pathfile  file da analizzare
  */
 char *opzioneD(char *pathfile);
 /**
- * @brief gestisce l'opzione -l, quindi stampera il numero di righe;
+ * @brief gestisce l'opzione -l, quindi stamperà il numero di righe;
  *
  * @param pathfile  file da analizzare
  */
 char *opzioneL(char *pathfile);
 /**
- * @brief gestisce l'opzione -s, quindi stampera  la dimensione del file;
+ * @brief gestisce l'opzione -s, quindi stamperà  la dimensione del file;
  *
  * @param pathfile  file da analizzare
  */
 char *opzioneS(char *pathfile);
 /**
- * @brief gestisce l'opzione -p, quindi stampera  i permessi del file;;
+ * @brief gestisce l'opzione -p, quindi stamperà  i permessi del file;;
  *
  * @param pathfile  file da analizzare
  */

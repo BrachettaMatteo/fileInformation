@@ -1,5 +1,5 @@
 #minimum version
-cmake_minimum_required(VERSION 2.4)
+cmake_minimum_required(VERSION 3.0)
 #name of project
 project(fileInformation)
 #add source directory for *.h

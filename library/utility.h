@@ -79,9 +79,9 @@ time_t dataUltimaModifica(char *pathFile);
  * @brief determina se il percorso è corretto, ovvero verifica se il file esiste o meno
  *
  * @param pathFile percorso del file
- * @return -1 se il file on esiste altrimenti un valore diverso da -1
+ * @return -1 se il file on esiste altrimenti 1
  */
-int checkPath(char *pathFile);
+int verificaPercorso(char *pathFile);
 
 /**
  * @brief permette di ottenre informazioni su tutti i file di un cartella
@@ -97,5 +97,19 @@ int visitaRicorsiva(char *filePath);
  * @return 1 se è una cartella altrimeneti -1
  */
 int verificaCartella(char *filePath);
+/**
+ * @brief inizializza o crea il file reportAnalisi.txt così da inserire
+ * il nuovo contenuto
+ * 
+ * @return 1 se è andata a buon fine altrimenti -1
+ */
 int creaReportAnalisi();
+/**
+ * @brief permette di aggiungere informazioni al file
+ * creato
+ * 
+ * @param filePath percorso del file
+ * @param testo testo da aggiungere
+ * @return 1 se il file è stato scritto altrimenti -1
+ */
 int scriviNelFile(char* filePath, char *testo);

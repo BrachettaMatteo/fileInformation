@@ -21,7 +21,7 @@ int numeroCaratteri(char *pathFile)
     char buffer[MAX_BUFFER] = "\0";
     // contatore caratteri
     int caratteri = 0;
-    if (checkPath(pathFile))
+    if (verificaPercorso(pathFile))
     {
         // apertura file
         fd = open(pathFile, O_RDONLY);
@@ -36,34 +36,33 @@ int numeroCaratteri(char *pathFile)
     return strlen(buffer);
 }
 
-
 char *permessi(char *pathFile)
 { // libero vechia memoria
 
     char *permessi;
 
     permessi = malloc(MAX_DIM_PERMESSI * sizeof(int));
-    // controllo se la var contiene elementi in casi 
-    //di risposta affermativa elimino il contenuto
+    // controllo se la var contiene elementi in casi
+    // di risposta affermativa elimino il contenuto
     if (strlen(permessi) > 0)
     {
         free(permessi);
         permessi = malloc(MAX_DIM_PERMESSI * sizeof(int));
     }
 
-    if (checkPath(pathFile))
+    if (verificaPercorso(pathFile))
     {
         if (access(pathFile, 01) == 0)
         {
-            strcat(permessi, "EXECUTE ");
+            strcat(permessi, "ESECUZIONE ");
         }
         if (access(pathFile, 02) == 0)
         {
-            strcat(permessi, "WRITE ");
+            strcat(permessi, "SCRITTURA ");
         }
         if (access(pathFile, 04) == 0)
         {
-            strcat(permessi, "READ ");
+            strcat(permessi, "LETTURA ");
         }
     }
     return permessi;
@@ -80,7 +79,7 @@ time_t dataUltimaModifica(char *pathFile)
     return mktime(&dataCreazione);
 }
 
-int checkPath(char *pathfFile)
+int verificaPercorso(char *pathfFile)
 {
     int fd;
     if ((fd = open(pathfFile, O_RDONLY)) != -1)
@@ -90,7 +89,7 @@ int checkPath(char *pathfFile)
     }
     else
     {
-        perror("Errore apertura file: ");
+        perror("ERRORE apertura file: ");
         return -1;
     }
 }
@@ -99,11 +98,11 @@ int dimensioneFile(char *pathFile)
 {
 
     int fd, size;
-    if (checkPath(pathFile) != -1)
+    if (verificaPercorso(pathFile) != -1)
     {
         fd = open(pathFile, O_RDONLY);
-        // punto all'ultimo byte del file 
-        //così da ottenere la dimensione
+        // punto all'ultimo byte del file
+        // così da ottenere la dimensione
         size = lseek(fd, 0, SEEK_END);
         close(fd);
     }
@@ -115,7 +114,7 @@ int numeroRighe(char *pathFile)
 
     int fd, i, righe;
     char buffer[MAX_BUFFER];
-    if (checkPath(pathFile) != -1)
+    if (verificaPercorso(pathFile) != -1)
     {
         fd = open(pathFile, O_RDONLY);
         read(fd, buffer, MAX_BUFFER);
@@ -145,10 +144,9 @@ int visitaRicorsiva(char *filePath)
         // leggo tutti gli elementi della cartella
         while ((dp = readdir(dir)) != NULL)
         {
-            // controllo che noi siano cartelle . e ..
-            if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
+            // controllo no siano cartelle "speciali"
+            if (dp->d_name[0] != '.')
             {
-
                 // azzero pathfile
                 strcpy(percorsoAggiuntivo, "");
                 // creo nuovo percorso
@@ -182,11 +180,10 @@ int creaReportAnalisi()
     int fd;
     if ((fd = open(PERCORSOREPORTCARTELLA, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU)) != -1)
     {
-       
         close(fd);
-        return 0;
+        return 1;
     }
-    perror("errore Creazione report");
+    perror("ERRORE creazione report");
     return -1;
 }
 int verificaCartella(char *filePath)
@@ -205,10 +202,18 @@ int scriviNelFile(char *pathFile, char *testo)
     int fd;
     if ((fd = open(pathFile, O_WRONLY | O_APPEND, S_IRWXU)) != -1)
     {
-        write(fd, testo, MAX_BUFFER);
-        close(fd);
-        return 0;
+        if (write(fd, testo, strlen(testo)) != -1)
+        {
+            close(fd);
+            return 1;
+        }
+        else
+            perror("ERRORE scrittura fila:");
+            return -1;
     }
-    perror("errore scrittura file:");
-    return -1;
+    else
+    {
+        perror("ERRORE apertura file:");
+        return -1;
+    }
 }

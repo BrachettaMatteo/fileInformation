@@ -23,7 +23,8 @@
  *           -s restituisce la dimensione del file;
  *           -p restituisce i permessi del file;
  *           -r crea un report con tutti i dettagli  su un nuovo file chiamato report.txt
- * se l'opzione non corrisponde alle opzione elenecate segnera un messaggio di errore
+ *           -a crea un report con l'informazioni di tutti i file della cartella
+ * se l'opzione non corrisponde alle opzione elenecate restituirà un messaggio di errore
  *
  */
 char* configurazioneParametri(char *filepath, char **opzione);

@@ -3,15 +3,14 @@ Sistema opartivo: Linux/Unix
 ## CMake (execute file)
 Digitare i comandi sotto elencati per eseguire il progetto:
 
-*Preparazione*[Posizione di partenza `./So2022`]
+*Preparazione*[Posizione di partenza `./fileInformation`]
 ``` bash
-cd fileInformation/
 mkdir build
 cd build
 cmake ..
 cmake --build .
 ```
-*Esecuzione* [Posizione attuale `./So2022/fileInformation/build`]
+*Esecuzione* [Posizione attuale `./fileInformation/build`]
 ``` bash
 ./fileInformation  [option]... [filepath]...
 ```

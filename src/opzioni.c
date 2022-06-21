@@ -81,7 +81,7 @@ char *opzioneR(char *pathfile)
 {
     if (!verificaCartella(pathfile))
     {
-        if (checkPath(pathfile) != -1)
+        if (verificaPercorso(pathfile) != -1)
         {
             int fd;
             if ((fd = open(PERCORSOREPORTFILE, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU)) != -1)
@@ -115,18 +115,18 @@ char *opzioneR(char *pathfile)
 
                 // scrivo nel file
 
-                write(fd, text, MAX_BUFFER);
+                write(fd, text, strlen(text));
                 close(fd);
 
-                return "Report Creato";
+                return "Report Creato \n";
             }
             else
             {
-                perror("Errore file");
+                perror("ERRORE file \n");
             }
         }
-        return MESSAGGIOERROREPERCOSOFILE;
     }
+    return MESSAGGIOERROREPERCOSOFILE;
 }
 char *opzioneA(char *filePath)
 {
@@ -138,12 +138,12 @@ char *opzioneA(char *filePath)
         // richiamo analisi cartella
         visitaRicorsiva(filePath);
 
-        return "Report creato";
+        return "Report creato \n";
     }
     else
     {
 
-        perror("errore apertura cartella:");
+        perror("ERRORE apertura cartella:");
     }
 }
 char *aiuto()

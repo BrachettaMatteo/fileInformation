@@ -1,3 +1,4 @@
 #ignore folder build cmake
-/fileInformation/build/*
+/build/*
+#ignore filder viual studio code
 /.vscode/*
