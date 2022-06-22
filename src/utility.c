@@ -82,7 +82,7 @@ int verificaPercorso(char *pathfFile){
     }
 }
 
-int dimensioneFile(char *pathFile){}
+int dimensioneFile(char *pathFile){
 
     int fd, size;
     if (verificaPercorso(pathFile))
