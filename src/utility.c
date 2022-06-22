@@ -1,8 +1,7 @@
 #include "utility.h"
 #include "config.h"
 
-char *nomeProprietario(char *pathFile)
-{
+char *nomeProprietario(char *pathFile){
     struct stat buf;
     struct passwd *pwd;
     // ottengo informazioni file
@@ -13,8 +12,7 @@ char *nomeProprietario(char *pathFile)
     return pwd->pw_name;
 }
 
-int numeroCaratteri(char *pathFile)
-{
+int numeroCaratteri(char *pathFile){
     // file descriptor
     int fd;
     // buffer per read
@@ -36,40 +34,31 @@ int numeroCaratteri(char *pathFile)
     return strlen(buffer);
 }
 
-char *permessi(char *pathFile)
-{ // libero vechia memoria
-
+char *permessi(char *pathFile){
     char *permessi;
 
     permessi = malloc(MAX_DIM_PERMESSI * sizeof(int));
     // controllo se la var contiene elementi in casi
     // di risposta affermativa elimino il contenuto
-    if (strlen(permessi) > 0)
-    {
+    if (strlen(permessi) > 0){
         free(permessi);
         permessi = malloc(MAX_DIM_PERMESSI * sizeof(int));
     }
 
-    if (verificaPercorso(pathFile))
-    {
+    if (verificaPercorso(pathFile)){
         if (access(pathFile, 01) == 0)
-        {
             strcat(permessi, "ESECUZIONE ");
-        }
+
         if (access(pathFile, 02) == 0)
-        {
             strcat(permessi, "SCRITTURA ");
-        }
+
         if (access(pathFile, 04) == 0)
-        {
             strcat(permessi, "LETTURA ");
-        }
     }
     return permessi;
 }
 
-time_t dataUltimaModifica(char *pathFile)
-{
+time_t dataUltimaModifica(char *pathFile){
     struct stat buf;
     stat(pathFile, &buf);
     struct tm dataCreazione;
@@ -79,8 +68,7 @@ time_t dataUltimaModifica(char *pathFile)
     return mktime(&dataCreazione);
 }
 
-int verificaPercorso(char *pathfFile)
-{
+int verificaPercorso(char *pathfFile){
     int fd;
     if ((fd = open(pathfFile, O_RDONLY)) != -1)
     {
@@ -94,11 +82,10 @@ int verificaPercorso(char *pathfFile)
     }
 }
 
-int dimensioneFile(char *pathFile)
-{
+int dimensioneFile(char *pathFile){}
 
     int fd, size;
-    if (verificaPercorso(pathFile) != -1)
+    if (verificaPercorso(pathFile))
     {
         fd = open(pathFile, O_RDONLY);
         // punto all'ultimo byte del file
@@ -109,13 +96,10 @@ int dimensioneFile(char *pathFile)
     return size;
 }
 
-int numeroRighe(char *pathFile)
-{
-
+int numeroRighe(char *pathFile){
     int fd, i, righe;
     char buffer[MAX_BUFFER];
-    if (verificaPercorso(pathFile) != -1)
-    {
+    if (verificaPercorso(pathFile)){
         fd = open(pathFile, O_RDONLY);
         read(fd, buffer, MAX_BUFFER);
         close(fd);
@@ -133,8 +117,7 @@ int numeroRighe(char *pathFile)
     return righe;
 }
 
-int visitaRicorsiva(char *filePath)
-{
+int visitaRicorsiva(char *filePath){
     struct dirent *dp;
     DIR *dir;
     char percorsoAggiuntivo[MAX_DIM_FILEPATH];
@@ -144,7 +127,7 @@ int visitaRicorsiva(char *filePath)
         // leggo tutti gli elementi della cartella
         while ((dp = readdir(dir)) != NULL)
         {
-            // controllo no siano cartelle "speciali"
+            // controllo che non siano cartelle "speciali"
             if (dp->d_name[0] != '.')
             {
                 // azzero pathfile
@@ -156,27 +139,25 @@ int visitaRicorsiva(char *filePath)
                 strcat(percorsoAggiuntivo, "/");
                 strcat(percorsoAggiuntivo, dp->d_name);
                 // verifico se è una cartella
-                if (verificaCartella(percorsoAggiuntivo) == 1)
+                if (verificaCartella(percorsoAggiuntivo))
                 {
-                    /*è una cartella richiamo la funzione sulla sottocartella
-                     */
+                    //è una cartella richiamo la funzione sulla sottocartella
+                     
                     visitaRicorsiva(percorsoAggiuntivo);
                 }
                 else
                 {
-                    /* è un file richiamo la configuraione di default
-                    per ottenre tutte l'informazioni*/
+                    // è un file richiamo la configuraione di default per ottenre tutte l'informazioni
                     scriviNelFile(PERCORSOREPORTCARTELLA, configurazioneDefault(percorsoAggiuntivo));
                 }
             }
         }
-        // chiudo cartela aperta
         closedir(dir);
     }
     return -1;
 }
-int creaReportAnalisi()
-{
+
+int creaReportAnalisi(){
     int fd;
     if ((fd = open(PERCORSOREPORTCARTELLA, O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU)) != -1)
     {
@@ -186,8 +167,8 @@ int creaReportAnalisi()
     perror("ERRORE creazione report");
     return -1;
 }
-int verificaCartella(char *filePath)
-{
+
+int verificaCartella(char *filePath){
     DIR *dir;
     if ((dir = opendir(filePath)) != NULL)
     {
@@ -197,8 +178,8 @@ int verificaCartella(char *filePath)
     else
         return 0;
 }
-int scriviNelFile(char *pathFile, char *testo)
-{
+
+int scriviNelFile(char *pathFile, char *testo){
     int fd;
     if ((fd = open(pathFile, O_WRONLY | O_APPEND, S_IRWXU)) != -1)
     {

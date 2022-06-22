@@ -4,7 +4,7 @@
  *          Maiellaro Giuseppe (giuseppe.maiellaro@studenti.unicam.it)
  * @version 0.2
  * @brief libreria che contiene tutte le funzioni del fileInfomration
- *
+ * @date 22/06/2022
  * @copyright Copyright (c) 2022
  *
  */

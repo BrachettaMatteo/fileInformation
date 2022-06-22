@@ -3,7 +3,7 @@
  * @authors Brachetta Matteo (matteo.brachetta@studenti.unicam.it)
  *          Maiellaro Giuseppe (giuseppe.maiellaro@studenti.unicam.it)
  * @version 0.2
- *
+ * @date 22/06/2022
  * @copyright Copyright (c) 2022
  *
  */
@@ -21,7 +21,7 @@ int main(int argc, char const *argv[])
         printf("%s", configurazioneParametri((char *)argv[2], (char **)argv));
         break;
     default:
-        printf("ERRORE FORMATO, i formato acettati sono: \n\t configurazione default: ./fileInformation [percorsoFile] \n\t configurazione con parametri: ./fileInformation <opzioni> [percorsoFile]\n ");
+        printf("ERRORE FORMATO i formati acettati sono: \n\t configurazione default: ./fileInformation [percorsoFile] \n\t configurazione con parametri: ./fileInformation <opzioni> [percorsoFile]\n ");
         break;
     }
     return 0;

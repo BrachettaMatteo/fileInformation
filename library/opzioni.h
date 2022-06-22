@@ -3,6 +3,7 @@
  * @authors Brachetta Matteo (matteo.brachetta@studenti.unicam.it)
  *          Maiellaro Giuseppe (giuseppe.maiellaro@studenti.unicam.it)
  * @version 0.2
+ * @date 22/06/2022
  * @brief libreria che si occupa della gestione delle opzioni dei comandi (-l,-o,,,)
  * @copyright Copyright (c) 2022
  *
